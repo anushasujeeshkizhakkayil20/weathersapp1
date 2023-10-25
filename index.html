@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <!-- link -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<!-- scr -->
+</head>
+<body style="background-image: url(./images/bbb.jpg);background-repeat: no-repeat; background-size: cover;">
+   <div class="container">
+      
+         <div class="row">
+                
+                <div class=" col-md-7 rounded text-center" style="background-image: url(./images/sky.jpeg);background-repeat: no-repeat; background-size:cover ; height: 550PX; margin-top: 90px;">
+                   <div class="d-flex justify-content-center">
+                        <h1 class="justify-content-center ">City Name For Weather</h1>
+                        <hr>
+                   </div>
+                    <div class=" d-flex mt-5 justify-content-center " >
+                      <img src="./images/OIP.jpeg" alt="" width="40px">
+                        <input id="input" type="text" placeholder="Search your location" class="form-control p-3 w-50 " >
+                      
+                       <input onclick="search()" type="button" value="search" class="btn btn-light   ms-3 w-25" >
+                      
+                      
+           
+        </div>
+           <!-- country -->
+                    
+           <div class="d-flex justify-content-start" style="font-size: 50px; ">
+            <p class="">Country</p>
+            <p id="coun" ></p>
+         </div>
+     
+       <div class="" style="margin-top: 60px;">
+           <!-- sunrise -->
+           <div class="d-flex justify-content-start" style="font-size: 30px; ">
+             <p>Sunrise</p>
+             <p id="sr" ></p>
+          </div>
+          
+     <!-- sunset -->
+     
+     <div class="d-flex justify-content-start" style="font-size: 30px; ">
+       <p >Sunset</p>
+       <p id="ss"  ></p>
+     </div>
+       </div>
+      
+            
+     
+                </div>
+                <div class="col-md-5 rounded" style="margin-top: 90px; height:550px ; background-color: aquamarine; background-image: url(./images/images.jpeg);background-repeat: no-repeat; background-size:cover ;">
+                    <div id="out1" class="text-">
+                   
+         <h1 class="text-center">weather details</h1>
+         <hr>
+         <!-- temp -->
+        <div class="d-flex" style="font-size: 30px; margin-left: 50px;">
+           <p >Temperature </p>
+           <p id="te" ></p>
+        </div>
+         <!-- feelitemp -->
+     <div class="d-flex" style="font-size: 30px; margin-left: 50px;">
+            <p >feels like </p>
+           <p id="fl" ></p>
+         </div>
+        
+        <!-- presu -->
+        <div class="d-flex" style="font-size: 30px; margin-left: 50px;">
+          <p >Pressure </p>
+          <p id="p" ></p>
+       </div>
+       <!-- humi -->
+       <div class="d-flex" style="font-size: 30px; margin-left: 50px;">
+        <p >Humidity </p>
+        <p id="h" ></p>
+     </div>
+     <!-- wind -->
+     <div class="d-flex" style="font-size: 30px; margin-left: 50px;">
+      <p >Wind </p>
+      <p id="w" ></p>
+   </div>
+   <!-- cloud -->
+   <div class="d-flex" style="font-size: 30px; margin-left: 50px;">
+    <p >Cloud</p>
+    <p id="cl" ></p>
+ </div>
+        <!--  dis -->
+       <!-- <div class="d-flex" style="font-size: 30px; margin-left: 50px;">
+         <p >Description</p>
+         <p id="dis" ></p>
+      </div> -->
+                  
+                    </div>
+                </div>
+           </div>
+         
+       
+   </div>
+      </body>
+      <script>
+    const search=async()=>{
+     city_name=input.value   
+  /*   console.log(cityname); */
+      const res= await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=7456a64aab26ba71f4bb13275375e46b
+      `) 
+    /* console.log(res);  */
+    res.json().then((weathe)=>{console.log(weathe);
+     dis=weathe.weather
+     console.log(dis);
+    clo =dis.map((item)=>item.main)
+     disc=dis.map((item)=>item.description)
+     //cloud
+      cl.innerHTML=`:${clo}`
+      //dis
+
+
+      //temperature
+    let tempe=weathe.main.temp
+      t=Math.round(tempe - 273.15)
+      min_t=`:${t}°c`
+       console.log(min_t);
+        te.innerHTML=min_t
+        //feels like
+        let feelsli=weathe.main.feels_like
+        console.log(feelsli);
+        fl.innerHTML=`:${feelsli}`
+       
+        //pressure
+        let pres=weathe.main.pressure
+        console.log(pres);
+        p.innerHTML=`:${pres}`
+        //humidity
+        let humi=weathe.main.humidity
+        console.log(humi);
+        h.innerHTML=`:${humi}⁒`
+        //wind
+        let win=weathe.wind.speed
+        console.log(win);
+        w.innerHTML=`:${win}`
+
+        //country
+        let country=weathe.sys.country
+        console.log(country);
+        coun.innerHTML=`:${country}`
+        //sunrise
+        let sunr=weathe.sys.sunrise
+        let r= new Date(sunr *1000)
+           rt=r.toLocaleTimeString()
+        console.log(rt);
+        sr.innerHTML=`:${rt}`
+         //sunset
+         let suns=weathe.sys.sunset
+         let s=new Date(suns*1000)
+         st=s.toLocaleTimeString()
+        console.log(st);
+        ss.innerHTML=`:${st}`
+
+       
+    })
+
+}
+
+</script>
+</script>
+</html>
